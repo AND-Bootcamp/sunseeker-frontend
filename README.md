@@ -1,8 +1,6 @@
 # sunseeker-frontend
 
-
 ### Requirements
-
 
 ### Contribution
 
