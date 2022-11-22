@@ -1,6 +1,8 @@
 import MapView, { Marker } from "react-native-maps";
 import { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
+import axios from 'axios';
+import SunnylocationsService from "../../services/Sunnylocations.service";
 
 import * as Location from 'expo-location';
 
@@ -9,10 +11,21 @@ const GoogleMap = () => {
         LATITUDE: null,
         LONGITUDE: null,
     });
+    const [sunnyLocations, setSunnyLocations] = useState([]);
     const [loading, isLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const LATITUDE = 52.164610;
     const LONGITUDE = 4.481780;
+
+    const getSunnyLocations = (LATITUDE, LONGITUDE) => {
+        isLoading(true);
+        SunnylocationsService.fetchLocations(LATITUDE, LONGITUDE)
+        .then((response) => {
+            setSunnyLocations(response.data);
+        })
+        .finally(() => isLoading(false))
+        .catch((error) => console.log(error));
+    }
 
     useEffect(() => {
         (async () => {
@@ -29,12 +42,13 @@ const GoogleMap = () => {
                 Since we are using an emulated device, the LAT and LONG will be hardcoded. Otherwise the device will be located in the USA. 
                 Below should take over the constants once the app is deployed to an actual device.
             */
-            let location = await Location.getCurrentPositionAsync({});
-            location.LATITUDE = location.coords.latitude;
-            location.LONGITUDE = location.coords.longitude;
+            // let location = await Location.getCurrentPositionAsync({});
+            // location.LATITUDE = location.coords.latitude;
+            // location.LONGITUDE = location.coords.longitude;
 
             isLoading(false);
         })();
+        getSunnyLocations(LATITUDE, LONGITUDE);
     }, []);
 
     let text = 'Loading...';
@@ -44,7 +58,7 @@ const GoogleMap = () => {
         text = JSON.stringify(location);
     }
 
-    const sunnyLocations = [
+    const testLocation = [
         {
             latitude: 52.163607,
             longitude: 4.507136,
@@ -72,6 +86,7 @@ const GoogleMap = () => {
                 showsMyLocationButton={true}
                 followsUserLocation={true}
                 pitchEnabled={true}
+                onPress={() => console.log(sunnyLocations)}
                 >
                     { sunnyLocations && sunnyLocations.map((sunnyLocation, index) => (
                         <Marker
