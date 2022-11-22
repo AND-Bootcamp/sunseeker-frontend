@@ -1,7 +1,10 @@
 import MapView, { Marker } from "react-native-maps";
-import { useState, useEffect } from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { StyleSheet, View, Dimensions, Button } from "react-native";
 
+import { useNavigation } from '@react-navigation/native';
+
+import GlobalStyles from '../../css-variables/Constants';
 import * as Location from 'expo-location';
 
 const GoogleMap = () => {
@@ -9,10 +12,38 @@ const GoogleMap = () => {
         LATITUDE: null,
         LONGITUDE: null,
     });
+    const [sunnyLocations, setSunnyLocations] = useState(null);
+    const [testLocation, setTestLocation] = useState([
+        {
+            latitude: 52.163607,
+            longitude: 4.507136,
+            title: "Test Park",
+            subtitle: "Test park voor de marker"
+        }
+    ])
     const [loading, isLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const LATITUDE = 52.164610;
     const LONGITUDE = 4.481780;
+
+    const navigation = useNavigation();
+
+    const clearAllMarkers = () => {
+        isLoading(true);
+        if (testLocation && testLocation.length >= 1) {
+            setTestLocation(null);
+        }
+
+        console.log(testLocation);
+    }
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Button onPress={() => clearAllMarkers()} title="Clear markers" color="#FF323C" />
+            )
+        })
+    }, [navigation])
 
     useEffect(() => {
         (async () => {
@@ -35,7 +66,7 @@ const GoogleMap = () => {
 
             isLoading(false);
         })();
-    }, []);
+    }, [testLocation]);
 
     let text = 'Loading...';
     if (errorMessage) {
@@ -44,28 +75,16 @@ const GoogleMap = () => {
         text = JSON.stringify(location);
     }
 
-    const sunnyLocations = [
-        {
-            latitude: 52.163607,
-            longitude: 4.507136,
-            title: "Test Park",
-            subtitle: "Test park voor de marker"
-        }
-    ];
-
-
-
     return (
         <View style={styles.container}>
             {!loading && (
                 <MapView 
                 style={styles.map}
-                provider="google"
                 initialRegion={{
                     latitude: LATITUDE,
                     longitude: LONGITUDE,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1,
+                    latitudeDelta: 0.05,
+                    longitudeDelta: 0.05,
                 }}
                 loadingEnabled={true}
                 showsUserLocation={true}
@@ -73,7 +92,9 @@ const GoogleMap = () => {
                 followsUserLocation={true}
                 pitchEnabled={true}
                 >
-                    { sunnyLocations && sunnyLocations.map((sunnyLocation, index) => (
+                    { testLocation && testLocation.length >= 1
+                    ? 
+                    testLocation.map((sunnyLocation, index) => (
                         <Marker
                         key={index}
                         coordinate={{
@@ -83,7 +104,9 @@ const GoogleMap = () => {
                         title={sunnyLocation.title}
                         description={sunnyLocation.subtitle}
                         />
-                    ) )}
+                    )) 
+                    : null
+                    }
              </MapView>
             )}
         </View>
