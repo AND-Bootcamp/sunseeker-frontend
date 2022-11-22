@@ -1,13 +1,8 @@
 import MapView, { Marker } from "react-native-maps";
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
+import { useState, useEffect, useLayoutEffect } from "react";
 import axios from 'axios';
 import SunnylocationsService from "../../services/Sunnylocations.service";
-=======
-import { useState, useEffect, useLayoutEffect } from "react";
 import { StyleSheet, View, Dimensions, Button } from "react-native";
->>>>>>> origin/main
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,9 +14,6 @@ const GoogleMap = () => {
         LATITUDE: null,
         LONGITUDE: null,
     });
-<<<<<<< HEAD
-    const [sunnyLocations, setSunnyLocations] = useState([]);
-=======
     const [sunnyLocations, setSunnyLocations] = useState(null);
     const [testLocation, setTestLocation] = useState([
         {
@@ -31,13 +23,11 @@ const GoogleMap = () => {
             subtitle: "Test park voor de marker"
         }
     ])
->>>>>>> origin/main
     const [loading, isLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const LATITUDE = 52.164610;
     const LONGITUDE = 4.481780;
 
-<<<<<<< HEAD
     const getSunnyLocations = (LATITUDE, LONGITUDE) => {
         isLoading(true);
         SunnylocationsService.fetchLocations(LATITUDE, LONGITUDE)
@@ -48,7 +38,6 @@ const GoogleMap = () => {
         .catch((error) => console.log(error));
     }
 
-=======
     const navigation = useNavigation();
 
     const clearAllMarkers = () => {
@@ -68,7 +57,6 @@ const GoogleMap = () => {
         })
     }, [navigation])
 
->>>>>>> origin/main
     useEffect(() => {
         (async () => {
             isLoading(true);
@@ -90,12 +78,7 @@ const GoogleMap = () => {
 
             isLoading(false);
         })();
-<<<<<<< HEAD
-        getSunnyLocations(LATITUDE, LONGITUDE);
-    }, []);
-=======
     }, [testLocation]);
->>>>>>> origin/main
 
     let text = 'Loading...';
     if (errorMessage) {
@@ -104,20 +87,6 @@ const GoogleMap = () => {
         text = JSON.stringify(location);
     }
 
-<<<<<<< HEAD
-    const testLocation = [
-        {
-            latitude: 52.163607,
-            longitude: 4.507136,
-            title: "Test Park",
-            subtitle: "Test park voor de marker"
-        }
-    ];
-
-
-
-=======
->>>>>>> origin/main
     return (
         <View style={styles.container}>
             {!loading && (
