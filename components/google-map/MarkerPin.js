@@ -26,8 +26,6 @@ const MarkerPin = ({ index, lat, lon, uvLevel }) => {
     const LATITUDE = 52.164610;
     const LONGITUDE = 4.481780;
 
-    
-
   return (
     <Marker
         key={index}
