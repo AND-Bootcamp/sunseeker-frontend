@@ -4,35 +4,29 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 
+const sunnyIconConfig = {
+    "LOW":"cloud",
+    "MODERATE":"partly-sunny",
+    "HIGH":"sunny",
+    "VERY_HIGH":"sunny",
+    "EXTREME":"sunny",
+}
+
+const SunnyIcon = (uvLevel) => {
+    return (
+    <View style={styles.container}>
+        <Text>Uv Level: {uvLevel}</Text>
+        <Ionicons name={sunnyIconConfig[uvLevel]} size={24} color="#FF323C" style={styles.tooltipContainer} />
+    </View>
+    );
+}
+
 const MarkerPin = ({ index, lat, lon, uvLevel }) => {
     const [toolTip, setToolTip] = useState(false);
     const LATITUDE = 52.164610;
     const LONGITUDE = 4.481780;
 
-    const uvLevelIcon = (uvLevel) => {
-        const selectIcon = () => {
-            switch(uvLevel) {
-                case "LOW":
-                    return "cloud";
-                case "MODERATE":
-                    return "partly-sunny";
-                case "HIGH":
-                    return "sunny";
-                case "VERY_HIGH":
-                    return "sunny";
-                case "EXTREME":
-                    return "sunny";    
-                default:
-                    return "rainy";
-            }
-        }
-        return (
-        <View style={styles.container}>
-            <Text>Uv Level: {uvLevel}</Text>
-            <Ionicons name={selectIcon(uvLevel)} size={24} color="#FF323C" style={styles.tooltipContainer} />
-        </View>
-        )
-    }
+    
 
   return (
     <Marker
@@ -53,7 +47,7 @@ const MarkerPin = ({ index, lat, lon, uvLevel }) => {
                 onClose={() => setToolTip(false)}
             >
                 <TouchableOpacity style={styles.touchable}>
-                    {uvLevelIcon(uvLevel)}
+                    <SunnyIcon uvLevel={uvLevel} />
                 </TouchableOpacity>
             </Callout>
         
