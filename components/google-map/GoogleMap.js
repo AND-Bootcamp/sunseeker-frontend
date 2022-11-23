@@ -1,53 +1,25 @@
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Callout, Marker } from "react-native-maps";
 import { useState, useEffect, useLayoutEffect } from "react";
 import axios from 'axios';
-import SunnylocationsService from "../../services/Sunnylocations.service";
-import { StyleSheet, View, Dimensions, Button } from "react-native";
+import { StyleSheet, View, Dimensions, Button, Text } from "react-native";
 
 import { useNavigation } from '@react-navigation/native';
 
 import GlobalStyles from '../../css-variables/Constants';
 import * as Location from 'expo-location';
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 const GoogleMap = () => {
     const [location, ] = useState({
         LATITUDE: null,
         LONGITUDE: null,
     });
+    const navigation = useNavigation();
     const [sunnyLocations, setSunnyLocations] = useState(null);
-    const [testLocation, setTestLocation] = useState([
-        {
-            latitude: 52.163607,
-            longitude: 4.507136,
-            title: "Test Park",
-            subtitle: "Test park voor de marker"
-        }
-    ])
     const [loading, isLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
     const LATITUDE = 52.164610;
     const LONGITUDE = 4.481780;
-
-    const getSunnyLocations = (LATITUDE, LONGITUDE) => {
-        isLoading(true);
-        SunnylocationsService.fetchLocations(LATITUDE, LONGITUDE)
-        .then((response) => {
-            setSunnyLocations(response.data);
-        })
-        .finally(() => isLoading(false))
-        .catch((error) => console.log(error));
-    }
-
-    const navigation = useNavigation();
-
-    const clearAllMarkers = () => {
-        isLoading(true);
-        if (testLocation && testLocation.length >= 1) {
-            setTestLocation(null);
-        }
-
-        console.log(testLocation);
-    }
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -75,10 +47,9 @@ const GoogleMap = () => {
             // let location = await Location.getCurrentPositionAsync({});
             // location.LATITUDE = location.coords.latitude;
             // location.LONGITUDE = location.coords.longitude;
-
             isLoading(false);
         })();
-    }, [testLocation]);
+    }, []);
 
     let text = 'Loading...';
     if (errorMessage) {
@@ -86,6 +57,33 @@ const GoogleMap = () => {
     } else if (location) {
         text = JSON.stringify(location);
     }
+
+    const fetchSunnyLocations = (LATITUDE, LONGITUDE) => {
+        const BASE_URL = `http://localhost:8080/sun-seeker/?lat=${LATITUDE}&lon=${LONGITUDE}`;
+        axios.get(
+            BASE_URL,
+        )
+        .then((response) => {
+            setSunnyLocations([...response.data.alternatives]);
+            isLoading(false);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+
+    useEffect(() => {
+        fetchSunnyLocations(LATITUDE, LONGITUDE);
+    }, []);
+
+    const clearAllMarkers = () => {
+        isLoading(true);
+        // if (sunnyLocations && sunnyLocations.length >= 1) {
+        //     setSunnyLocations(null);
+        //     isLoading(false);
+        // }
+        isLoading(false);
+    };
 
     return (
         <View style={styles.container}>
@@ -95,29 +93,33 @@ const GoogleMap = () => {
                 initialRegion={{
                     latitude: LATITUDE,
                     longitude: LONGITUDE,
-                    latitudeDelta: 0.05,
-                    longitudeDelta: 0.05,
+                    latitudeDelta: 0.06,
+                    longitudeDelta: 0.06,
                 }}
                 loadingEnabled={true}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
                 followsUserLocation={true}
                 pitchEnabled={true}
-                onPress={() => console.log(sunnyLocations)}
                 >
-                    { testLocation && testLocation.length >= 1
+                    {!loading && sunnyLocations && sunnyLocations.length > 0
                     ? 
-                    testLocation.map((sunnyLocation, index) => (
+                    sunnyLocations.map((sunnyLocation, index) => {
+                        const { lat, lon, uvLevel } = sunnyLocation.coordination;
+                        return (
                         <Marker
-                        key={index}
-                        coordinate={{
-                            latitude: sunnyLocation.latitude,
-                            longitude: sunnyLocation.longitude,
-                        }}
-                        title={sunnyLocation.title}
-                        description={sunnyLocation.subtitle}
-                        />
-                    )) 
+                            key={index}
+                            coordinate={{
+                                latitude: lat,
+                                longitude: lon,
+                            }}
+                            title={uvLevel}
+                            description={uvLevel}
+                            onPress={() => handleInfoMenu(info)}
+                            >
+                        </Marker>
+                        )
+                    })
                     : null
                     }
              </MapView>
