@@ -15,7 +15,9 @@ const GoogleMap = () => {
         LONGITUDE: 4.481780,
     });
     const navigation = useNavigation();
-    const [sunnyLocations, setSunnyLocations] = useState(null);
+    const {loading:sunnyLoading, data} = fetchSunnyLocations(location);
+    console.log(sunnyLoading);
+    console.log(data);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -57,13 +59,13 @@ const GoogleMap = () => {
         text = JSON.stringify(location);
     }
 
-    useEffect(() => {
-        setLoading(true);
-        let {LATITUDE, LONGITUDE} = location;
-        let locations = fetchSunnyLocations(LATITUDE, LONGITUDE);
-        setSunnyLocations(locations);
-        setLoading(false);
-    }, [location]);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     let {LATITUDE, LONGITUDE} = location;
+    //     let locations = fetchSunnyLocations(LATITUDE, LONGITUDE);
+    //     setSunnyLocations(locations);
+    //     setLoading(false);
+    // }, [location]);
 
     const clearAllMarkers = () => {
         setLoading(true);

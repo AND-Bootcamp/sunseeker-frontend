@@ -2,17 +2,32 @@ import axios from 'axios';
 
 const BASE_URL = "http://localhost:8080/sun-seeker/"
 
-const fetchSunnyLocations = (LATITUDE, LONGITUDE) => {
-    const BASE_URL = `${BASE_URL}?lat=${LATITUDE}&lon=${LONGITUDE}`;
-    axios.get(
-        BASE_URL,
-    )
-    .then((response) => {
-        return [...response.data.alternatives];
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+const fetchSunnyLocations = (location) => {
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState(null)
+    let {LATITUDE, LONGITUDE} = location;
+    const url = `${BASE_URL}?lat=${LATITUDE}&lon=${LONGITUDE}`;
+    
+    const fetchApi = () => {
+        axios.get(url)
+        .then(response => {
+            return response.json()
+        })
+        .then(json => {
+            console.log(json)
+            setLoading(false)
+            setData(json)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
+
+    useEffect(() => {
+        fetchApi();
+    }, []);
+
+    return { loading, data }
 };
 
 export {fetchSunnyLocations}
