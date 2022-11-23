@@ -1,3 +1,4 @@
+import { fetchSunnyLocations } from "../../api/SunnyLocationApi";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { useState, useEffect, useLayoutEffect } from "react";
 import axios from 'axios';
@@ -57,24 +58,13 @@ const GoogleMap = () => {
         text = JSON.stringify(location);
     }
 
-    const fetchSunnyLocations = (LATITUDE, LONGITUDE) => {
-        const BASE_URL = `http://localhost:8080/sun-seeker/?lat=${LATITUDE}&lon=${LONGITUDE}`;
-        axios.get(
-            BASE_URL,
-        )
-        .then((response) => {
-            setSunnyLocations([...response.data.alternatives]);
-            setLoading(false);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    };
-
     useEffect(() => {
+        setLoading(true);
         let {LATITUDE, LONGITUDE} = location;
-        fetchSunnyLocations(LATITUDE, LONGITUDE);
-    }, []);
+        let locations = fetchSunnyLocations(LATITUDE, LONGITUDE);
+        setSunnyLocations(locations);
+        setLoading(false);
+    }, [location]);
 
     const clearAllMarkers = () => {
         setLoading(true);
