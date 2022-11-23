@@ -10,16 +10,14 @@ import * as Location from 'expo-location';
 import { TouchableHighlight } from "react-native-gesture-handler";
 
 const GoogleMap = () => {
-    const [location, ] = useState({
-        LATITUDE: null,
-        LONGITUDE: null,
+    const [location, setLocation] = useState({
+        LATITUDE: 52.164610,
+        LONGITUDE: 4.481780,
     });
     const navigation = useNavigation();
     const [sunnyLocations, setSunnyLocations] = useState(null);
-    const [loading, isLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const LATITUDE = 52.164610;
-    const LONGITUDE = 4.481780;
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -31,12 +29,12 @@ const GoogleMap = () => {
 
     useEffect(() => {
         (async () => {
-            isLoading(true);
+            setLoading(true);
             let { status } = await Location.requestForegroundPermissionsAsync();
 
             if (status !== 'granted') {
                 setErrorMessage('Permission to access location was denied');
-                isLoading(false);
+                setLoading(false);
                 return;
             }
 
@@ -45,9 +43,10 @@ const GoogleMap = () => {
                 Below should take over the constants once the app is deployed to an actual device.
             */
             // let location = await Location.getCurrentPositionAsync({});
-            // location.LATITUDE = location.coords.latitude;
-            // location.LONGITUDE = location.coords.longitude;
-            isLoading(false);
+            // let {latitude, longitude} = location.coords;
+            // setLocation({LATITUDE:latitude, LONGITUDE:longitude});
+
+            setLoading(false);
         })();
     }, []);
 
@@ -65,7 +64,7 @@ const GoogleMap = () => {
         )
         .then((response) => {
             setSunnyLocations([...response.data.alternatives]);
-            isLoading(false);
+            setLoading(false);
         })
         .catch((error) => {
             console.log(error);
@@ -73,16 +72,17 @@ const GoogleMap = () => {
     };
 
     useEffect(() => {
+        let {LATITUDE, LONGITUDE} = location;
         fetchSunnyLocations(LATITUDE, LONGITUDE);
     }, []);
 
     const clearAllMarkers = () => {
-        isLoading(true);
+        setLoading(true);
         // if (sunnyLocations && sunnyLocations.length >= 1) {
         //     setSunnyLocations(null);
         //     isLoading(false);
         // }
-        isLoading(false);
+        setLoading(false);
     };
 
     return (
@@ -91,8 +91,8 @@ const GoogleMap = () => {
                 <MapView 
                 style={styles.map}
                 initialRegion={{
-                    latitude: LATITUDE,
-                    longitude: LONGITUDE,
+                    latitude: location.LATITUDE,
+                    longitude: location.LONGITUDE,
                     latitudeDelta: 0.06,
                     longitudeDelta: 0.06,
                 }}
