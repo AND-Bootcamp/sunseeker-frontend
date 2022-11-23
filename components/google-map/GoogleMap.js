@@ -18,9 +18,10 @@ const GoogleMap = () => {
     const navigation = useNavigation();
     // const [sunnyLocations, setSunnyLocations] = useState(null);
 
-    // const {loading:sunnyLoading, data} = fetchSunnyLocations(location);
-    // console.log(sunnyLoading);
-    // console.log(data);
+    const {loading:sunnyLoading, data, error} = fetchSunnyLocations(location);
+    console.log(sunnyLoading);
+    console.log(data);
+    console.log(error);
 
 
 
