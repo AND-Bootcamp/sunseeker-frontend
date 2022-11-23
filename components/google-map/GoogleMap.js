@@ -1,7 +1,6 @@
 import { fetchSunnyLocations } from "../../api/SunnyLocationApi";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { useState, useEffect, useLayoutEffect } from "react";
-import axios from 'axios';
 import { StyleSheet, View, Dimensions, Button, Text } from "react-native";
 
 import { useNavigation } from '@react-navigation/native';
