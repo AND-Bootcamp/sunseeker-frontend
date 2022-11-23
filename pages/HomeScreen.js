@@ -11,7 +11,7 @@ const HomeScreen = () => {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <Button onPress={() => console.log("hello")} title="Get locations" color="#FF323C" />
+                <Button onPress={() => console.log("Get locations")} title="Get locations" color="#FF323C" />
             )
         })
     }, [navigation])
