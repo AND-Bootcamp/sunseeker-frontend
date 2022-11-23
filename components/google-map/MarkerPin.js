@@ -23,15 +23,13 @@ const SunnyIcon = (uvLevel) => {
 
 const MarkerPin = ({ index, lat, lon, uvLevel }) => {
     const [toolTip, setToolTip] = useState(false);
-    const LATITUDE = 52.164610;
-    const LONGITUDE = 4.481780;
 
   return (
     <Marker
         key={index}
         coordinate={{
-            latitude: LATITUDE,
-            longitude: LONGITUDE,
+            latitude: lat,
+            longitude: lon,
         }}
         title="Sunny location"
         description="This is the one closest to you"
