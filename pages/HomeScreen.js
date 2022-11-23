@@ -4,6 +4,8 @@ import GoogleMap from "../components/google-map/GoogleMap";
 import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
+    console.log("HomeScreen 01");
+
     const navigation = useNavigation();
 
     useLayoutEffect(() => {
@@ -14,6 +16,7 @@ const HomeScreen = () => {
         })
     }, [navigation])
 
+    console.log("HomeScreen 09");
 
     return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

@@ -8,6 +8,9 @@ import GlobalStyles from '../../css-variables/Constants';
 import * as Location from 'expo-location';
 
 const GoogleMap = () => {
+
+    console.log("Google Map 01");
+
     const [location, ] = useState({
         LATITUDE: null,
         LONGITUDE: null,
@@ -28,6 +31,8 @@ const GoogleMap = () => {
 
     const navigation = useNavigation();
 
+    console.log("Google Map 02");
+
     const clearAllMarkers = () => {
         isLoading(true);
         if (testLocation && testLocation.length >= 1) {
@@ -37,6 +42,8 @@ const GoogleMap = () => {
         console.log(testLocation);
     }
 
+    console.log("Google Map 03");
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -44,6 +51,8 @@ const GoogleMap = () => {
             )
         })
     }, [navigation])
+
+    console.log("Google Map 04");
 
     useEffect(() => {
         (async () => {
@@ -68,12 +77,21 @@ const GoogleMap = () => {
         })();
     }, [testLocation]);
 
+    console.log("Google Map 05");
+
     let text = 'Loading...';
     if (errorMessage) {
+        console.log("Google Map 05.1");
+        console.log("--------------------");
+        console.log(errorMessage);
+        console.log("--------------------");
         text = errorMessage;
     } else if (location) {
+        console.log("Google Map 05.2");
         text = JSON.stringify(location);
     }
+
+    console.log("Google Map 09");
 
     return (
         <View style={styles.container}>
@@ -92,7 +110,8 @@ const GoogleMap = () => {
                 followsUserLocation={true}
                 pitchEnabled={true}
                 >
-                    { testLocation && testLocation.length >= 1
+
+                    { (testLocation && testLocation.length) >= 1
                     ? 
                     testLocation.map((sunnyLocation, index) => (
                         <Marker

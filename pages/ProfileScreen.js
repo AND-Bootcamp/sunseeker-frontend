@@ -1,7 +1,9 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const ConfigurationScreen = () => {
+const ProfileScreen = () => {
+  console.log("ProfileScreen 01");
+
     return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Profile!</Text>
@@ -9,4 +11,4 @@ const ConfigurationScreen = () => {
     )
 };
 
-export default ConfigurationScreen;
+export default ProfileScreen;
