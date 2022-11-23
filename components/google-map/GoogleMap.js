@@ -1,13 +1,11 @@
 import { fetchSunnyLocations } from "../../api/SunnyLocationApi";
-import MapView, { Marker } from "react-native-maps";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { StyleSheet, View, Dimensions, Button, Text } from "react-native";
-import axios from "axios";
-
+import { StyleSheet, View, Dimensions, Button } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 import * as Location from 'expo-location';
 import MarkerPin from "./MarkerPin";
+import MapView from "react-native-maps";
 
 const GoogleMap = () => {
     const [location, setLocation] = useState({
@@ -16,23 +14,14 @@ const GoogleMap = () => {
         uvLevel: "HIGH",
     });
     const navigation = useNavigation();
-    // const [sunnyLocations, setSunnyLocations] = useState(null);
-
     const {loading:sunnyLoading, data, error} = fetchSunnyLocations(location);
-    console.log(sunnyLoading);
-    console.log(data);
-    console.log(error);
-
-
-
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    // const { sunnyLocations } = fetchSunnyLocations(location);
 
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Button onPress={() => clearAllMarkers()} title="Clear markers" color="#FF323C" />
+                <Button title="Clear markers" color="#FF323C" />
             )
         })
     }, [navigation])
@@ -67,55 +56,6 @@ const GoogleMap = () => {
         text = JSON.stringify(location);
     }
 
-    // useEffect(() => {
-    //     setLoading(true);
-    //     let {LATITUDE, LONGITUDE} = location;
-
-    //     let fetchLocations = async () => {
-    //         const response = await fetchSunnyLocations(LATITUDE, LONGITUDE);
-    //         return response;
-    //     }
-
-    //     let fetchedLocations = fetchLocations(LATITUDE, LONGITUDE)
-    //     .then(() => setSunnyLocations(fetchedLocations))
-    //     .catch(console.error);
-    //     setLoading(false);
-    // }, [location]);
-
-    /*
-        Location fetching is disabled for now. Otherwise it would fetch on every reload, and we will run through our daily limit fast.
-    */
-
-    // const fetchSunnyLocations = (location) => {
-    //     let { LATITUDE, LONGITUDE} = location;
-    //     setLoading(true);
-    //     const BASE_URL = `http://localhost:8080/sun-seeker/?lat=${LATITUDE}&lon=${LONGITUDE}`;
-    //     axios.get(
-    //         BASE_URL,
-    //     )
-    //     .then((response) => {
-    //         setSunnyLocations([...response.data.alternatives]);
-    //         setLoading(false);
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //         setLoading(false);
-    //     });
-    // };
-
-    // useEffect(() => {
-    //     fetchSunnyLocations(location);
-    // }, []);
-
-    const clearAllMarkers = () => {
-        setLoading(true);
-        // if (sunnyLocations && sunnyLocations.length >= 1) {
-        //     setSunnyLocations(null);
-        //     isLoading(false);
-        // }
-        setLoading(false);
-    };
-
     return (
         <View style={styles.container}>
             {!loading && (
@@ -132,35 +72,22 @@ const GoogleMap = () => {
                 showsMyLocationButton={true}
                 followsUserLocation={true}
                 pitchEnabled={true}
-                // onPress={() => console.log(sunnyLocations)}
                 > 
-                    <MarkerPin
-                        index={1}
-                        lat={location.LATITUDE}
-                        lon={location.LONGITUDE}
-                        uvLevel={location.uvLevel}
+                {!sunnyLoading && data 
+                ?
+                data.alternatives.map((sunnyLocation, index) => {
+                    const {coordination: {lat, lon}, uvLevel} = sunnyLocation;
+                    return (
+                        <MarkerPin
+                        index={index}
+                        lat={lat}
+                        lon={lon}
+                        uvLevel={uvLevel}
                      />
-                    {/* {!loading && sunnyLocations && sunnyLocations.length > 0
-                    ? 
-                    sunnyLocations.map((sunnyLocation, index) => {
-                        const { lat, lon, uvLevel } = sunnyLocation.coordination;
-                        console.log(lat, lon, uvLevel);
-                        return (
-                        <Marker
-                            key={index}
-                            coordinate={{
-                                latitude: lat,
-                                longitude: lon,
-                            }}
-                            title={uvLevel}
-                            description={uvLevel}
-                            onPress={() => handleInfoMenu(info)}
-                            >
-                        </Marker>
-                        )
-                    })
-                    : null
-                    } */}
+                    )
+                })
+                : null
+                }
              </MapView>
             )}
         </View>
