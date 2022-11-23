@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import react, { useState, useEffect } from 'react';
+
 const BASE_URL = "http://localhost:8080/sun-seeker/"
 
 const fetchSunnyLocations = (location) => {
