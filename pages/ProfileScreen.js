@@ -11,21 +11,22 @@ const ProfileScreen = () => {
   
     return (
 
-<View style={{ justifyContent: 'top', alignItems: 'left' }}>
-    <View style={{ justifyContent: 'top', alignItems: 'left' }}>
+<View style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
         <Text style={{ fontSize: 24,
             fontWeight: 'bold',
             color: "#FF323C"  }}>Your Profile</Text>
     </View>
     <Separator />
-    <View style={{ justifyContent: 'top', alignItems: 'left',
+    <View style={{ justifyContent: 'flex-start',
             padding: 5
             }}>
-        <Text style={{ fontSize: 16, color: "#FF323C"   }}>You: </Text>
+        <Text style={{ fontSize: 16, color: "#FF323C"  }}>You: </Text>
 
         <View style={{
                 flexDirection: "row",
-                padding: 3
+                padding: 3,
+                justifyContent: 'space-between'
                 }}>
             <Text style={{ fontSize: 12, color: "#FF323C" }}>Name:</Text>
             <TextInput style={styles.longInput}
@@ -46,14 +47,13 @@ const ProfileScreen = () => {
     </View>
     <Separator />
     <View style={{
-//            flexDirection: "row",
             padding: 5,
-            alignItems: 'top'
             }}>
         <Text style={{ fontSize: 16, color: "#FF323C" }}>Your Address: </Text>
         <View style={{
                 flexDirection: "row",
-                padding: 3
+                padding: 3,
+                justifyContent: 'space-between'
                 }}>
             <Text style={{ fontSize: 12, color: "#FF323C" }}>Street:</Text>
             <TextInput style={styles.longInput}
@@ -63,7 +63,8 @@ const ProfileScreen = () => {
         </View>
         <View style={{
                 flexDirection: "row",
-                padding: 3
+                padding: 3,
+                justifyContent: 'space-between'
                 }}>
             <Text style={{ fontSize: 12, color: "#FF323C" }}>ZIP:</Text>
             <TextInput style={styles.input}
@@ -73,7 +74,8 @@ const ProfileScreen = () => {
         </View>
         <View style={{
                 flexDirection: "row",
-                padding: 3
+                padding: 3,
+                justifyContent: 'space-between'
                 }}>
             <Text style={{ fontSize: 12, color: "#FF323C" }}>City:</Text>
             <TextInput style={styles.longInput}
@@ -83,7 +85,8 @@ const ProfileScreen = () => {
         </View>
         <View style={{
                 flexDirection: "row",
-                padding: 3
+                padding: 3,
+                justifyContent: 'space-between'
                 }}>
             <Text style={{ fontSize: 12, color: "#FF323C" }}>Country:</Text>
             <TextInput style={styles.longInput}
@@ -98,8 +101,6 @@ const ProfileScreen = () => {
     <View style={{
             flexDirection: "row",
             padding: 100,
-            alignItems: 'right',
-            width: 500
         }}>
         <Text> </Text>
         <Button color="#FF323C" background="#FF323C"
@@ -108,7 +109,6 @@ const ProfileScreen = () => {
             />
     </View>
 </View>
-
     )
 };
 
