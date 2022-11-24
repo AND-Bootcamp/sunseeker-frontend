@@ -11,14 +11,14 @@ const ConfigurationScreen = () => {
 
     return (
 
-<View style={{ justifyContent: 'top', alignItems: 'left' }}>
-    <View style={{ justifyContent: 'top', alignItems: 'left' }}>
+<View style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
         <Text style={{ fontSize: 24,
             fontWeight: 'bold',
             color: "#FF323C"  }}>Settings</Text>
     </View>
     <Separator />
-    <View style={{ justifyContent: 'top', alignItems: 'left',
+    <View style={{ justifyContent: 'center', alignItems: 'flex-start',
             padding: 10
             }}>
         <Text style={{ fontSize: 16, color: "#FF323C"   }}>Distance Range: </Text>
@@ -44,17 +44,15 @@ const ConfigurationScreen = () => {
     <View style={{
             flexDirection: "row",
             padding: 10,
-            alignItems: 'top'
             }}>
         <Text style={{ fontSize: 16, color: "#FF323C" }}>Mode: </Text>
-        <Text style={{ fontSize: 12, alignItems: 'bottom' }}>[] Dark / [] Light</Text>
+        <Text style={{ fontSize: 12, alignItems: 'center' }}>[] Dark / [] Light</Text>
 
     </View>
     <Separator />
     <View style={{
             flexDirection: "row",
             padding: 10,
-            alignItems: 'top'
             }}>
         <Text style={{ fontSize: 16, color: "#FF323C" }}>UV Level: </Text>
         <TextInput
@@ -67,8 +65,7 @@ const ConfigurationScreen = () => {
     <View style={{
             flexDirection: "row",
             padding: 100,
-            alignItems: 'right',
-            width: 500
+            alignItems: 'flex-end',
         }}>
         <Text> </Text>
         <Button color="#FF323C" background="#FF323C"
