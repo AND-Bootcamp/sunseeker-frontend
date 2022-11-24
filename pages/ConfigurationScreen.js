@@ -30,17 +30,13 @@ const ConfigurationScreen = () => {
             <Text style={{ fontSize: 12, color: "#FF323C" }}>MAXIMUM:</Text>
             <TextInput style={styles.input}
                 onChangeText={onChangeText}
-                value={100}
+                value="25"
                 />
-        </View>
-        <View style={{
-                flexDirection: "row",
-                padding: 10
-                }}>
-            <Text style={{ fontSize: 12, color: "#FF323C" }}>Minimum:</Text>
+            <Text style={{ fontSize: 12, color: "#FF323C" }}>  </Text>
+            <Text style={{ fontSize: 12, color: "#FF323C" }}>  Minimum:</Text>
             <TextInput style={styles.input}
                 onChangeText={onChangeText}
-                value={100}
+                value="3"
                 />
         </View>
     </View>
@@ -64,7 +60,7 @@ const ConfigurationScreen = () => {
         <TextInput
             style={styles.input}
             onChangeText={onChangeText}
-            value={100}
+            value="LOW"
             />
     </View>
     <Separator />
@@ -88,7 +84,7 @@ const ConfigurationScreen = () => {
 const styles = StyleSheet.create({
   input: {
     height: 30,
-    width: 100,
+    width: 50,
     margin: 2,
     borderWidth: 2,
     padding: 2, color: "#FF323C"
