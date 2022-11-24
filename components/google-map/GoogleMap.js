@@ -9,8 +9,8 @@ import MapView from "react-native-maps";
 
 const GoogleMap = () => {
     const [location, setLocation] = useState({
-        LATITUDE: 52.164610,
-        LONGITUDE: 4.481780,
+        LATITUDE: 52.36646,
+        LONGITUDE: 4.880355,
         uvLevel: "HIGH",
     });
     const navigation = useNavigation();
@@ -64,8 +64,8 @@ const GoogleMap = () => {
                 initialRegion={{
                     latitude: location.LATITUDE,
                     longitude: location.LONGITUDE,
-                    latitudeDelta: 0.06,
-                    longitudeDelta: 0.06,
+                    latitudeDelta: 0.2,
+                    longitudeDelta: 0.2,
                 }}
                 loadingEnabled={true}
                 showsUserLocation={true}
