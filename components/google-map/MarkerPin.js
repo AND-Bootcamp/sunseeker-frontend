@@ -12,7 +12,7 @@ const sunnyIconConfig = {
     "EXTREME":"sunny",
 }
 
-const SunnyIcon = (uvLevel) => {
+const SunnyIcon = ({ uvLevel, uvValue }) => {
     return (
     <View style={styles.container}>
         <Text>Uv Level: {uvLevel}</Text>
@@ -21,7 +21,7 @@ const SunnyIcon = (uvLevel) => {
     );
 }
 
-const MarkerPin = ({ index, lat, lon, uvLevel }) => {
+const MarkerPin = ({ index, lat, lon, uvLevel, uvValue }) => {
     const [toolTip, setToolTip] = useState(false);
 
   return (
@@ -44,6 +44,7 @@ const MarkerPin = ({ index, lat, lon, uvLevel }) => {
             >
                 <TouchableOpacity style={styles.touchable}>
                     <SunnyIcon uvLevel={uvLevel} />
+                    <Text color="#FF323C">{uvValue}</Text>
                 </TouchableOpacity>
             </Callout>
         

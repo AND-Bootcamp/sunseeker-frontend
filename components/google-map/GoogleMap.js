@@ -76,17 +76,36 @@ const GoogleMap = () => {
                 {!sunnyLoading && data 
                 ?
                 data.alternatives.map((sunnyLocation, index) => {
-                    const {coordination: {lat, lon}, uvLevel} = sunnyLocation;
+                    // console.log(data);
+                    const {coordinates: {lon, lat}} = sunnyLocation;
+                    console.log(lon, lat);
+                    const {uvDetail: {uvLevel, uvValue}} = sunnyLocation;
+                    console.log(uvLevel, uvValue);
                     return (
                         <MarkerPin
-                        index={index}
-                        lat={lat}
-                        lon={lon}
-                        uvLevel={uvLevel}
-                     />
+                            index={index}
+                            lat={lat}
+                            lon={lon}
+                            uvLevel={uvLevel}
+                            />
                     )
                 })
                 : null
+                // ?
+                // data.alternatives.map((sunnyLocation, index) => {
+                //     console.log(data);
+                //     const {coordinates: {lon, lat}} = sunnyLocation;
+                //     console.log(sunnyLocation.uvDetail);
+                //     return (
+                //         <MarkerPin
+                //         index={index}
+                //         lat={lat}
+                //         lon={lon}
+                //         uvLevel={location.uvLevel}
+                //      />
+                //     )
+                // })
+                // : null
                 }
              </MapView>
             )}
