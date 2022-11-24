@@ -80,11 +80,12 @@ const GoogleMap = () => {
                     const {uvDetail: {uvLevel, uvValue}} = sunnyLocation;
                     return (
                         <MarkerPin
-                            index={index}
+                            key={index}
                             lat={lat}
                             lon={lon}
                             uvLevel={uvLevel}
                             uvValue={uvValue}
+                            location={location}
                             />
                     )
                 })

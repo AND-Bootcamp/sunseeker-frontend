@@ -18,8 +18,17 @@
       "**/*"
     ],
     "ios": {
+      "infoPlist": {
+         "LSApplicationQueriesSchemes": [
+            "comgooglemaps",
+            "citymapper",
+            "uber",
+            "lyft",
+            "waze"
+         ]
+      },
       "supportsTablet": true
-    },
+   },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/image.png",

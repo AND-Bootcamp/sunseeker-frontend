@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { View, Text, Button } from "react-native";
 import GoogleMap from "../components/google-map/GoogleMap";
 import { useNavigation } from '@react-navigation/native';
