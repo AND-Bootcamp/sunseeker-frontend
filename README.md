@@ -11,7 +11,7 @@
 - Do not push to main branch directly.
 
 
-## Installation
+## Installation - General
 
 ### Brew
 
@@ -57,6 +57,17 @@ For our MVP we need the Expo library:
 
 > yarn add expo
 
+
+### Expo account
+
+npx expo register
+
+npx expo login
+
+npx expo whoami
+
+
+
 ### Expo Web system
 Not needed because the SunSeeker is <b><i>"mobile first"</i></b> (and only).
 
@@ -65,7 +76,7 @@ Anyhow:
 
 
 
-### Android emulator
+## Installation - Android emulator
 
 [Android emulator homepage](https://docs.expo.dev/workflow/android-studio-emulator/)
 
@@ -74,7 +85,7 @@ Download Android Studio (almost 1 GByte...) :
 
 [Android Studio](https://developer.android.com/studio)
 
-Install the application.
+Install the Android Studio application.
 
 Run the Android Studio application and set up its configuration.
 
@@ -140,11 +151,27 @@ Press the "Create device" button.
 Choose the type of hardware you'd like to emulate.
 
 
+## Installation - iOS emulator
+
+Install XCode and XCode Commandline Tools
+
+```
+xcode-select --install
+xcode-select -p
+gcc
+sudo xcodebuild -license
+gcc --version
+```
 
 
 ## Activation of the server
 
 > npx expo start -c
+
+Or better:
+
+> npm start --clear
+
 
 Then in the terminal screen select the Android or iOS simulator
 

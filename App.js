@@ -14,6 +14,8 @@ import OfficesScreen from './pages/OfficesScreen';
 export default function App() {
   const Tab = createBottomTabNavigator();
 
+  console.log("App 01");
+
   return (
     <>
     <StatusBar style='auto' />

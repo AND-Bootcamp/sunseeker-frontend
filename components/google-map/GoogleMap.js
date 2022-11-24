@@ -18,6 +18,8 @@ const GoogleMap = () => {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
+    console.log("Google Map 03");
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
@@ -25,6 +27,8 @@ const GoogleMap = () => {
             )
         })
     }, [navigation])
+
+    console.log("Google Map 04");
 
     useEffect(() => {
         (async () => {
@@ -49,12 +53,21 @@ const GoogleMap = () => {
         })();
     }, []);
 
+    console.log("Google Map 05");
+
     let text = 'Loading...';
     if (errorMessage) {
+        console.log("Google Map 05.1");
+        console.log("--------------------");
+        console.log(errorMessage);
+        console.log("--------------------");
         text = errorMessage;
     } else if (location) {
+        console.log("Google Map 05.2");
         text = JSON.stringify(location);
     }
+
+    console.log("Google Map 09");
 
     return (
         <View style={styles.container}>
