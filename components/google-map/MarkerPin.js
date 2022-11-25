@@ -19,6 +19,7 @@ const SunnyIcon = ({ uvLevel, uvValue }) => {
         <Text>Uv Level: {uvLevel}</Text>
         <Ionicons name={sunnyIconConfig[uvLevel]} size={24} color="#FF323C" style={styles.tooltipContainer} />
         <Text color="#FF323C">{uvValue}</Text>
+        <Text>Show route</Text>
     </View>
     );
 }
